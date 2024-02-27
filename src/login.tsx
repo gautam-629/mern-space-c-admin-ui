@@ -1,14 +1,15 @@
 import { Layout, Card, Space, Form, Input, Checkbox, Button, Flex} from 'antd';
 import { LockFilled, UserOutlined, LockOutlined } from '@ant-design/icons';
-import Logo from '../../components/icons/Logo';
 import { useMutation } from '@tanstack/react-query';
-import { login } from '../../http/api';
-import { Credentials } from '../../type';
+import { login } from './http/api';
+import { Credentials } from './type';
+import Logo from './components/icons/Logo';
 
 const loginUser = async (credentials: Credentials) => {
     const { data } = await login(credentials);
     return data;
 };
+
 const LoginPage = () => {
     const { mutate, isPending, isError, error } = useMutation({
         mutationKey: ['login'],
