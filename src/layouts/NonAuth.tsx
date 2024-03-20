@@ -1,7 +1,6 @@
 
 import { Navigate, Outlet } from 'react-router-dom'
 import { useAuthStore } from '../store';
-
 const NonAuth = () => {
     const { user } = useAuthStore();
     if (user !== null) {
@@ -9,6 +8,7 @@ const NonAuth = () => {
     }
     return (
         <div>
+            
             <Outlet />
         </div>
     )
