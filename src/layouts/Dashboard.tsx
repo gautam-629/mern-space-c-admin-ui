@@ -2,7 +2,7 @@
 import { NavLink, Navigate, Outlet } from 'react-router-dom';
 import { useAuthStore } from '../store';
 import { Avatar, Badge, Dropdown, Flex, Layout, Menu, Space, theme } from 'antd';
-import { useEffect, useState } from 'react';
+import {  useState } from 'react';
 import Logo from '../components/icons/Logo';
 import Icon, { BellFilled } from '@ant-design/icons';
 import Home from '../components/icons/Home';
