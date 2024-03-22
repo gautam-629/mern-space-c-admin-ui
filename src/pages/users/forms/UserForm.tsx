@@ -123,7 +123,7 @@ const UserForm = () => {
                                         onChange={() => { }}
                                         placeholder="Select restaurant">
                                         {tenants?.map((tenant: Tenant) => (
-                                            <Select.Option value={tenant.id}>
+                                            <Select.Option value={tenant.id} key={tenant.id}>
                                                 {tenant.name}
                                             </Select.Option>
                                         ))}
@@ -131,7 +131,7 @@ const UserForm = () => {
                                 </Form.Item>
                             </Col>
                         </Row>
-                    </Card>
+                    </Card>  
                 </Space>
             </Col>
         </Row>

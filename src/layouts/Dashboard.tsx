@@ -1,8 +1,8 @@
 
 import { NavLink, Navigate, Outlet } from 'react-router-dom';
 import { useAuthStore } from '../store';
-import { Avatar, Badge, Dropdown, Flex, Layout, Menu, Space, theme } from 'antd';
-import {  useState } from 'react';
+import { Avatar, Badge,  Dropdown, Flex, Layout, Menu, Space, theme } from 'antd';
+import { useState } from 'react';
 import Logo from '../components/icons/Logo';
 import Icon, { BellFilled } from '@ant-design/icons';
 import Home from '../components/icons/Home';
@@ -10,7 +10,7 @@ import UserIcon from '../components/icons/UserIcon';
 import { foodIcon } from '../components/icons/FoodIcon';
 import BasketIcon from '../components/icons/BasketIcon';
 import GiftIcon from '../components/icons/GiftIcon';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation} from '@tanstack/react-query';
 import { logout } from '../http/api';
 
 const { Sider, Header, Content, Footer } = Layout;
@@ -53,13 +53,13 @@ const getMenuItems = (role: string) => {
 };
 
 const Dashboard = () => {
-
     const { logout: logoutFromStore } = useAuthStore();
 
     const { mutate: logoutMutate } = useMutation({
         mutationKey: ['logout'],
         mutationFn: logout,
         onSuccess: async () => {
+
             logoutFromStore();
             return;
         },
@@ -70,17 +70,16 @@ const Dashboard = () => {
         token: { colorBgContainer },
     } = theme.useToken();
 
+
     // call getself
     const { user } = useAuthStore();
     if (user === null) {
         return <Navigate to="/auth/login" replace={true} />;
     }
-       const items = getMenuItems(user.role);
-       
-      
+    const items = getMenuItems(user.role);
+
     return (
         <div>
-           
             <Layout style={{ minHeight: '100vh', background: colorBgContainer }}>
                 <Sider
                     collapsible
@@ -103,8 +102,8 @@ const Dashboard = () => {
                         }}>
                         <Flex gap="middle" align="start" justify="space-between">
                             <Badge text={
-                                    user.role === 'admin' ? 'You are an admin' : user.tenant?.name
-                                } status="success" />
+                                user.role === 'admin' ? 'You are an admin' : user.tenant?.name
+                            } status="success" />
                             <Space size={16}>
                                 <Badge dot={true}>
                                     <BellFilled />
