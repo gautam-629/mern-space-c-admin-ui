@@ -1,7 +1,7 @@
 
-import { NavLink, Navigate, Outlet } from 'react-router-dom';
+import { NavLink, Navigate, Outlet, useLocation } from 'react-router-dom';
 import { useAuthStore } from '../store';
-import { Avatar, Badge,  Dropdown, Flex, Layout, Menu, Space, theme } from 'antd';
+import { Avatar, Badge, Dropdown, Flex, Layout, Menu, Space, theme } from 'antd';
 import { useState } from 'react';
 import Logo from '../components/icons/Logo';
 import Icon, { BellFilled } from '@ant-design/icons';
@@ -10,7 +10,7 @@ import UserIcon from '../components/icons/UserIcon';
 import { foodIcon } from '../components/icons/FoodIcon';
 import BasketIcon from '../components/icons/BasketIcon';
 import GiftIcon from '../components/icons/GiftIcon';
-import { useMutation} from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { logout } from '../http/api';
 
 const { Sider, Header, Content, Footer } = Layout;
@@ -22,11 +22,7 @@ const getMenuItems = (role: string) => {
             icon: <Icon component={Home} />,
             label: <NavLink to="/">Home</NavLink>,
         },
-        {
-            key: '/restaurants',
-            icon: <Icon component={foodIcon} />,
-            label: <NavLink to="/restaurants">Restaurants</NavLink>,
-        },
+
         {
             key: '/products',
             icon: <Icon component={BasketIcon} />,
@@ -46,6 +42,11 @@ const getMenuItems = (role: string) => {
             icon: <Icon component={UserIcon} />,
             label: <NavLink to="/users">Users</NavLink>,
         });
+        menus.splice(2, 0, {
+            key: '/restaurants',
+            icon: <Icon component={foodIcon} />,
+            label: <NavLink to="/restaurants">Restaurants</NavLink>,
+        },);
         return menus;
     }
 
@@ -70,13 +71,14 @@ const Dashboard = () => {
         token: { colorBgContainer },
     } = theme.useToken();
 
+    const location = useLocation()
 
     // call getself
     const { user } = useAuthStore();
     if (user === null) {
-        return <Navigate to="/auth/login" replace={true} />;
+        return <Navigate to={`/auth/login?returnTo=${location.pathname}`} replace={true} />;
     }
-    const items = getMenuItems(user.role);
+    const items = getMenuItems(user?.role);
 
     return (
         <div>
@@ -90,7 +92,7 @@ const Dashboard = () => {
                         <Logo />
                     </div>
 
-                    <Menu theme="light" defaultSelectedKeys={['/']} mode="inline" items={items} />
+                    <Menu theme="light" defaultSelectedKeys={[location.pathname]} mode="inline" items={items} />
                 </Sider>
                 <Layout>
                     <Header style={{ padding: 0, background: colorBgContainer }} />

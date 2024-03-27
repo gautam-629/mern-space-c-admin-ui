@@ -53,7 +53,7 @@ const LoginPage = () => {
                 return;
             }
 
-            setUser(selfDataPromise.data);
+            setUser(selfDataPromise?.data);
         },
 
     });
